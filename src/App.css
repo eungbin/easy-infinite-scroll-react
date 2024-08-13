@@ -1,6 +1,8 @@
 .container {
-  width: 500px;
-  height: 200px;
+  width: 480px;
   margin: 0 auto;
   background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 90px;
 }
