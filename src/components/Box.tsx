@@ -2,14 +2,16 @@ import React from 'react';
 import '../css/Box.css';
 
 interface IProps {
-  boxNumber: number;
+  src: string;
+  name: string;
 }
 
-export default function Box({ boxNumber }: IProps) {
+export default function Box({ src, name }: IProps) {
   
   return (
     <div className='box-container'>
-      <span className='box-inner-text'>{boxNumber}</span>
+      <img src={`https://image.tmdb.org/t/p/w500${src}`} />
+      <span className='box-inner-text'>{name}</span>
     </div>
   );
 }
