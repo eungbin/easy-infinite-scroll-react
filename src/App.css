@@ -4,4 +4,5 @@
   display: flex;
   flex-wrap: wrap;
   gap: 40px 90px;
+  padding: 100px 200px;
 }

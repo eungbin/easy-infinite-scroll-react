@@ -7,6 +7,11 @@ interface Props {}
 
 const App = ({  }: Props) => {
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetTopRatedMovies();
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    if(!!data) { setMovies([...data.pages]); }
+  }, [data]);
   
   console.log("data", data);
 
@@ -15,7 +20,7 @@ const App = ({  }: Props) => {
       {data?.pages.map((v) => (
         v.results.map(value => (
           <Box src={value.poster_path} name={value.title} key={value.id}>
-
+            
           </Box>
         ))
       ))}
