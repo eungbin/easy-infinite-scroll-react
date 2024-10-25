@@ -9,6 +9,7 @@ const App = ({  }: Props) => {
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNexPage] = useState(false);
   const [pageParams, setPageParams] = useState([]);
+  const observerRef = useRef();
   
   const fetchTopRatedMovies = async(page) => {
     if(pageParams.includes(page)) return;
@@ -31,18 +32,39 @@ const App = ({  }: Props) => {
   }
   
   useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const firstEntery = entries[0];
+      if(firstEntery.isIntersecting) {
+        console.log("show");
+      } else {
+        console.log("no show");
+      }
+    });
+    
+    if(observerRef.current) observer.observe(observerRef.current);
+
+    return () => {
+      if(observerRef.current) observer.unobserve(observerRef.current);
+    }
+  }, []);
+  useEffect(() => {
     fetchTopRatedMovies(page);
   }, [page]);
 
   return (
-    <div className="container" id='infinite-scroll-container'>
-      {movies?.map((v, idx) => (
-        <Box src={v.poster_path} name={v.title} key={idx}>
-        
-        </Box>
-        )
-      )}
-    </div>
+    <>
+      <div className="container" id='infinite-scroll-container'>
+        {movies?.map((v, idx) => (
+          <Box src={v.poster_path} name={v.title} key={idx}>
+          
+          </Box>
+          )
+        )}
+      </div>
+      <div style={{display:'flex', justifyContent:'center'}}>
+        <h1 ref={observerRef}>Load More</h1>
+      </div>
+    </>
   );
 };
 
