@@ -13,6 +13,8 @@ const App = ({  }: Props) => {
   
   const fetchTopRatedMovies = async(page) => {
     if(pageParams.includes(page)) return;
+    console.log(pageParams);
+
     setLoading(true);
 
     try {
@@ -35,7 +37,7 @@ const App = ({  }: Props) => {
     const observer = new IntersectionObserver((entries) => {
       const firstEntery = entries[0];
       if(firstEntery.isIntersecting) {
-        console.log("show");
+        setPage(page+1);
       } else {
         console.log("no show");
       }
@@ -56,7 +58,7 @@ const App = ({  }: Props) => {
       <div className="container" id='infinite-scroll-container'>
         {movies?.map((v, idx) => (
           <Box src={v.poster_path} name={v.title} key={idx}>
-          
+            
           </Box>
           )
         )}
